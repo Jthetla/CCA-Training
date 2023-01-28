@@ -1,0 +1,50 @@
+﻿@model TodoApp.ViewModels.TodoVM
+
+@{
+    ViewData["Title"] = "ToDoList";
+}
+
+
+<div class="row align-content-center">
+    <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+     @Html.TextBoxFor(m=> m.toDo.toDoItem,new { Class=" offset-2 col-md-6" })
+                <input  type="submit"  value="Add" class="btn btn-secondary" />
+        </form>
+    </div>
+
+
+@foreach (var item in Model.todos) {
+   
+    <div class= "row offset-1 col-md-10 align-content-center" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;margin-top: 25px;" >
+        
+        <div class="col-md-3 align-content-center text-center">
+            <a class="btn btn-danger" asp-action="Delete" asp-route-ToDoId = "@item.ToDoId" onclick="return confirm('are you sure?')"><i class="fa-solid fa-trash"></i> Delete</a>
+        </div>
+        
+        <div class="col-md-4 align-content-center text-center">
+           @item.toDoItem
+          </div>
+
+          <div class="col-md-3 align-content-center text-center ">
+            @if (@item.isCompleted) {
+             <a class="btn btn-success" asp-action="Toggle" asp-route-ToDoId = "@item.ToDoId" > 
+                 <i class="fa-solid fa-circle-check"></i> 
+                 <text>Done</text>
+                 </a>
+            }
+            @if (!@item.isCompleted)
+                {
+                    <a class="btn btn-warning" asp-action="Toggle" asp-route-ToDoId = "@item.ToDoId" >
+                   <i class="fa-solid fa-circle-xmark"></i> <text>Mark as Done?</text>
+                   </a>
+                }
+                
+            
+              </div>
+
+         </div>
+           
+        
+
+}
